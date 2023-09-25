@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Address } from "./address.entity";
 
 enum AccountType {
   Comprador = "Comprador",
@@ -38,4 +45,8 @@ export class User {
 
   @Column({ type: "varchar", length: 150 })
   description: string;
+
+  @OneToOne(() => Address, (address) => address.user)
+  @JoinColumn()
+  address: Address;
 }
