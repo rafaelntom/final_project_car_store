@@ -2,10 +2,12 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Address } from "./address.entity";
+import Announcement from "./announcement.entity";
 
 enum AccountType {
   Comprador = "Comprador",
@@ -49,4 +51,7 @@ export class User {
   @OneToOne(() => Address, (address) => address.user)
   @JoinColumn()
   address: Address;
+
+  @OneToMany(() => Announcement, (a) => a.user)
+  announcement: Announcement[];
 }
