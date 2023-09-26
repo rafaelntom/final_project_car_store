@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import { createuser } from "../services/user.service";
+import { createUser } from "../services/user.service";
 import { UserReturnSchema } from "../schemas/user.schema";
 
 const create = async (req: Request, res: Response) => {
-  const userData = UserReturnSchema.parse(req.body);
-  return res.status(201).json(userData);
+  const userData = req.body;
+  const newUser = await createUser(userData);
+  return res.status(201).json(newUser);
 };
 
 export default { create };

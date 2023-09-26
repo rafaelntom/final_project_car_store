@@ -3,11 +3,11 @@ import { z } from "zod";
 const UserSchema = z.object({
   id: z.number().positive(),
   is_seller: z.boolean(),
-  name: z.string().min(1).max(70).nonempty(),
-  password: z.string().min(1).max(100).nonempty(),
-  email: z.string().min(1).max(60).nonempty(),
-  cpf: z.string().min(1).max(14),
-  phone: z.string().min(1).max(15),
+  name: z.string().max(70).nonempty(),
+  password: z.string().max(100).nonempty(),
+  email: z.string().email().max(60).nonempty(),
+  cpf: z.string().max(14).nonempty(),
+  phone: z.string().max(15).nonempty(),
   birth_date: z.string().or(z.date()),
   description: z.string().min(0).max(150).nullable(),
 });

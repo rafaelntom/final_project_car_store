@@ -20,7 +20,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: "boolean", default: false })
   is_seller: boolean;
 
   @Column({ type: "varchar", length: 70, nullable: false })
