@@ -5,6 +5,8 @@ import { CreateUserSchema } from "../schemas/user.schema";
 import verifyEmail from "../middlewares/verifyEmail.middleware";
 import verifyCPF from "../middlewares/verifyCPF.middleware";
 import verifyUserId from "../middlewares/verifyUserId.middleware";
+import validateHeaderToken from "../middlewares/validateToken.middleware";
+import verifyAccountOwner from "../middlewares/verifyAccountOwner.middleware";
 
 export const userRouter: Router = Router();
 
@@ -16,4 +18,10 @@ userRouter.post(
   userController.create
 );
 
-userRouter.delete("/:id", verifyUserId, userController.remove);
+userRouter.delete(
+  "/:id",
+  validateHeaderToken,
+  verifyAccountOwner,
+  verifyUserId,
+  userController.remove
+);
