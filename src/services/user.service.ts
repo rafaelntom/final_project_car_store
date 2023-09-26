@@ -9,4 +9,8 @@ const createUser = async (payload: TCreateUser): Promise<TUserReturn> => {
   return UserReturnSchema.parse(newUser);
 };
 
-export { createUser };
+const deleteUser = async (id: number) => {
+  await userRepository.delete(id);
+};
+
+export { createUser, deleteUser };
