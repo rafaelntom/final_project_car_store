@@ -25,3 +25,11 @@ userRouter.delete(
   verifyUserId,
   userController.remove
 );
+
+userRouter.patch(
+  "/:id",
+  validateHeaderToken,
+  verifyAccountOwner,
+  verifyUserId,
+  userController.update
+);

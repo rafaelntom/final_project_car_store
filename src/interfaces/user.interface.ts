@@ -4,6 +4,7 @@ import {
   MultipleUsersReturnSchema,
   UpdateUserSchema,
   UserLoginSchema,
+  UserOnlySchema,
   UserReturnSchema,
   UserSchema,
 } from "../schemas/user.schema";
@@ -14,6 +15,7 @@ type TMultipleUsers = z.infer<typeof MultipleUsersReturnSchema>;
 type TCreateUser = z.infer<typeof CreateUserSchema>;
 type TUpdateUser = z.infer<typeof UpdateUserSchema>;
 type TUserLogin = z.infer<typeof UserLoginSchema>;
+type TOnlyUser = z.infer<typeof UserOnlySchema>;
 
 export {
   TUser,
@@ -22,4 +24,5 @@ export {
   TCreateUser,
   TUpdateUser,
   TUserLogin,
+  TOnlyUser,
 };

@@ -1,12 +1,18 @@
 import { hashSync } from "bcryptjs";
-import { TCreateUser, TUserReturn } from "../interfaces/user.interface";
+import {
+  TCreateUser,
+  TOnlyUser,
+  TUpdateUser,
+  TUser,
+  TUserReturn,
+} from "../interfaces/user.interface";
 import userRepository from "../repositories/user.repository";
-import { UserReturnSchema } from "../schemas/user.schema";
+import { UpdateUserSchema, UserReturnSchema } from "../schemas/user.schema";
 import addressRepository from "../repositories/address.repository";
+import { DeepPartial } from "typeorm";
+import { User } from "../entities/user.entity";
 
-//: Promise<TUserReturn>
-
-const createUser = async (payload: TCreateUser) => {
+const createUser = async (payload: TCreateUser): Promise<TUserReturn> => {
   const { address, ...userPayload } = payload;
 
   const hashedPassword = hashSync(userPayload.password, 10);
@@ -27,4 +33,13 @@ const deleteUser = async (id: number) => {
   await userRepository.delete(id);
 };
 
-export { createUser, deleteUser };
+const updateUser = async (payload: TUpdateUser, user: TOnlyUser) => {
+  const updatedUserInfo: TUpdateUser = await userRepository.save({
+    ...(user as DeepPartial<User>),
+    ...(payload as DeepPartial<User>),
+  });
+
+  return UpdateUserSchema.parse(updatedUserInfo);
+};
+
+export { createUser, deleteUser, updateUser };
