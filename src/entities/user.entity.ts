@@ -10,7 +10,7 @@ import { Address } from "./address.entity";
 import { Announcement } from "./announcement.entity";
 import { Comment } from "./comment.entity";
 
-export enum AccountType {
+enum AccountType {
   Comprador = "Comprador",
   Anunciante = "Anunciante",
 }
@@ -20,13 +20,8 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({
-    type: "enum",
-    enum: AccountType,
-    default: AccountType.Comprador,
-    nullable: false,
-  })
-  account_type: AccountType;
+  @Column()
+  is_seller: boolean;
 
   @Column({ type: "varchar", length: 70, nullable: false })
   name: string;
@@ -46,8 +41,8 @@ export class User {
   @Column({ type: "date", nullable: false })
   birth_date: Date;
 
-  @Column({ type: "varchar", length: 150 })
-  description: string;
+  @Column({ type: "varchar", length: 150, nullable: true })
+  description: string | null;
 
   @OneToOne(() => Address, (address) => address.user)
   @JoinColumn()

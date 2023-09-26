@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const UserSchema = z.object({
   id: z.number().positive(),
-  account_type: z.enum(["Comprador", "Anunciante"]),
+  is_seller: z.boolean(),
   name: z.string().min(1).max(70).nonempty(),
   password: z.string().min(1).max(100).nonempty(),
   email: z.string().min(1).max(60).nonempty(),
