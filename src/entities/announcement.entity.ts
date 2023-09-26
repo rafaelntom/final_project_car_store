@@ -38,7 +38,7 @@ export class Announcement {
   @Column({ type: "decimal", precision: 12, scale: 2, nullable: false })
   price: number | string;
 
-  @Column({ type: "text", length: 15 })
+  @Column({ type: "text" })
   description: string;
 
   @ManyToOne(() => User, (u) => u.announcement)

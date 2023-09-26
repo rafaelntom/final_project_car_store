@@ -10,7 +10,7 @@ import { Address } from "./address.entity";
 import { Announcement } from "./announcement.entity";
 import { Comment } from "./comment.entity";
 
-enum AccountType {
+export enum AccountType {
   Comprador = "Comprador",
   Anunciante = "Anunciante",
 }
