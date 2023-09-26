@@ -1,8 +1,16 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { User } from "./user.entity";
+import { Image } from "./images.entity";
+import { Comment } from "./comment.entity";
 
 @Entity("announcements")
-export default class Announcement {
+export class Announcement {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -35,4 +43,10 @@ export default class Announcement {
 
   @ManyToOne(() => User, (u) => u.announcement)
   user: User;
+
+  @OneToMany(() => Image, (i) => i.announcement)
+  image: Image[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comment: Comment;
 }

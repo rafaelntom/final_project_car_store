@@ -7,7 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Address } from "./address.entity";
-import Announcement from "./announcement.entity";
+import { Announcement } from "./announcement.entity";
+import { Comment } from "./comment.entity";
 
 enum AccountType {
   Comprador = "Comprador",
@@ -54,4 +55,7 @@ export class User {
 
   @OneToMany(() => Announcement, (a) => a.user)
   announcement: Announcement[];
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comment: Comment[];
 }
