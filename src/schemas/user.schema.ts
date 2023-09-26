@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AddressSchema } from "./address.schema";
 
 const UserSchema = z.object({
   id: z.number().positive(),
@@ -10,6 +11,7 @@ const UserSchema = z.object({
   phone: z.string().max(15).nonempty(),
   birth_date: z.string().or(z.date()),
   description: z.string().min(0).max(150).nullable(),
+  address: AddressSchema,
 });
 
 const UserReturnSchema = UserSchema.omit({ password: true });

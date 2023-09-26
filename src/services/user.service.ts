@@ -2,13 +2,22 @@ import { hashSync } from "bcryptjs";
 import { TCreateUser, TUserReturn } from "../interfaces/user.interface";
 import userRepository from "../repositories/user.repository";
 import { UserReturnSchema } from "../schemas/user.schema";
+import addressRepository from "../repositories/address.repository";
 
-const createUser = async (payload: TCreateUser): Promise<TUserReturn> => {
-  const hashedPassword = hashSync(payload.password, 10);
+//: Promise<TUserReturn>
 
-  payload.password = hashedPassword;
+const createUser = async (payload: TCreateUser) => {
+  const { address, ...userPayload } = payload;
 
-  const newUser = userRepository.create(payload);
+  const hashedPassword = hashSync(userPayload.password, 10);
+  userPayload.password = hashedPassword;
+
+  const userAddress = addressRepository.create(address);
+  await addressRepository.save(userAddress);
+
+  const newUser = userRepository.create(userPayload);
+  newUser.address = userAddress;
+
   await userRepository.save(newUser);
 
   return UserReturnSchema.parse(newUser);

@@ -16,10 +16,10 @@ export class Address {
   street: string;
 
   @Column({ type: "varchar", length: 20, nullable: true })
-  number: string;
+  number: string | null;
 
   @Column({ type: "varchar", length: 30, nullable: true })
-  complement: string;
+  complement: string | null;
 
   @OneToOne(() => User, (user) => user.address)
   user: User;
