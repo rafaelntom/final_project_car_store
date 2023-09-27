@@ -29,11 +29,14 @@ const createUser = async (payload: TCreateUser): Promise<TUserReturn> => {
   return UserReturnSchema.parse(newUser);
 };
 
-const deleteUser = async (id: number) => {
+const deleteUser = async (id: number): Promise<void> => {
   await userRepository.delete(id);
 };
 
-const updateUser = async (payload: TUpdateUser, user: TOnlyUser) => {
+const updateUser = async (
+  payload: TUpdateUser,
+  user: TOnlyUser
+): Promise<TUpdateUser> => {
   const updatedUserInfo: TUpdateUser = await userRepository.save({
     ...(user as DeepPartial<User>),
     ...(payload as DeepPartial<User>),
