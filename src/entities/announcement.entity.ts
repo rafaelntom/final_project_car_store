@@ -45,7 +45,7 @@ export class Announcement {
   user: User;
 
   @OneToMany(() => Image, (i) => i.announcement)
-  image: Image[];
+  images: Image[];
 
   @OneToMany(() => Comment, (comment) => comment.user)
   comment: Comment;

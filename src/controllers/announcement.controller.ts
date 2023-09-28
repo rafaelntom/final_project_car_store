@@ -3,6 +3,8 @@ import {
   createAnnouncement,
   retrieveAllAnnouncements,
   retrieveAnnouncementById,
+  retrieveAnnouncementByUserId,
+  updateAnnouncement,
 } from "../services/announcement.service";
 
 const create = async (req: Request, res: Response) => {
@@ -24,4 +26,19 @@ const readById = async (req: Request, res: Response) => {
   return res.status(200).json(announcement);
 };
 
-export default { create, readAll, readById };
+const readByUser = async (req: Request, res: Response) => {
+  const announcements = await retrieveAnnouncementByUserId(
+    Number(req.params.id)
+  );
+
+  return res.status(200).json(announcements);
+};
+
+const update = async (req: Request, res: Response) => {
+  const announcementId = Number(req.params.id);
+  const announcement = await updateAnnouncement(req.body, announcementId);
+
+  return res.status(200).json(announcement);
+};
+
+export default { create, readAll, readById, readByUser, update };
