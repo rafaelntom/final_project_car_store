@@ -44,9 +44,9 @@ export class Announcement {
   @ManyToOne(() => User, (u) => u.announcement)
   user: User;
 
-  @OneToMany(() => Image, (i) => i.announcement)
+  @OneToMany(() => Image, (i) => i.announcement, { cascade: true })
   images: Image[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user, { cascade: true })
   comment: Comment;
 }

@@ -6,6 +6,7 @@ import {
   retrieveAnnouncementByUserId,
   updateAnnouncement,
 } from "../services/announcement.service";
+import announcementRepository from "../repositories/announcement.repository";
 
 const create = async (req: Request, res: Response) => {
   const userId = Number(res.locals.decoded.sub);
@@ -41,4 +42,10 @@ const update = async (req: Request, res: Response) => {
   return res.status(200).json(announcement);
 };
 
-export default { create, readAll, readById, readByUser, update };
+const remove = async (req: Request, res: Response) => {
+  await announcementRepository.delete(Number(req.params.id));
+
+  return res.status(204).json();
+};
+
+export default { create, readAll, readById, readByUser, update, remove };
