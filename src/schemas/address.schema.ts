@@ -15,4 +15,6 @@ const AddressSchema = z.object({
   complement: z.string().min(1).max(30).nullable(),
 });
 
-export { AddressSchema };
+const UpdateAdressSchema = AddressSchema.partial();
+
+export { AddressSchema, UpdateAdressSchema };

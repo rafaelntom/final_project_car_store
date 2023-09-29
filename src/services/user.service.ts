@@ -1,16 +1,8 @@
 import { hashSync } from "bcryptjs";
-import {
-  TCreateUser,
-  TOnlyUser,
-  TUpdateUser,
-  TUser,
-  TUserReturn,
-} from "../interfaces/user.interface";
+import { TCreateUser, TUserReturn } from "../interfaces/user.interface";
 import userRepository from "../repositories/user.repository";
 import { UpdateUserSchema, UserReturnSchema } from "../schemas/user.schema";
 import addressRepository from "../repositories/address.repository";
-import { DeepPartial } from "typeorm";
-import { User } from "../entities/user.entity";
 
 const createUser = async (payload: TCreateUser): Promise<TUserReturn> => {
   const { address, ...userPayload } = payload;
@@ -33,16 +25,40 @@ const deleteUser = async (id: number): Promise<void> => {
   await userRepository.delete(id);
 };
 
-const updateUser = async (
-  payload: TUpdateUser,
-  user: TOnlyUser
-): Promise<TUpdateUser> => {
-  const updatedUserInfo: TUpdateUser = await userRepository.save({
-    ...(user as DeepPartial<User>),
-    ...(payload as DeepPartial<User>),
+const updateUser = async (payload: any, userId: number) => {
+  const foundUser = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+    relations: {
+      address: true,
+    },
   });
 
-  return UpdateUserSchema.parse(updatedUserInfo);
+  if (payload.address) {
+    const { address, ...userInfoPayload } = payload;
+
+    const existingAddress = await addressRepository.findOne({
+      where: {
+        user: !foundUser,
+      },
+    });
+
+    const updatedAddress = { ...existingAddress, ...address };
+
+    await addressRepository.save(updatedAddress);
+
+    const updatedUser = { ...foundUser, ...userInfoPayload };
+
+    await userRepository.save(updatedUser);
+
+    return UpdateUserSchema.parse(updatedUser);
+  }
+
+  const updatedUser = { ...foundUser, ...payload };
+  await userRepository.save(updatedUser);
+
+  return UpdateUserSchema.parse(updatedUser);
 };
 
 export { createUser, deleteUser, updateUser };

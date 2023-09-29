@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { userController } from "../controllers";
 import validateRequestBody from "../middlewares/validadeRequestBody.middleware";
-import { CreateUserSchema } from "../schemas/user.schema";
+import { CreateUserSchema, UpdateUserSchema } from "../schemas/user.schema";
 import verifyEmail from "../middlewares/verifyEmail.middleware";
 import verifyCPF from "../middlewares/verifyCPF.middleware";
 import verifyUserId from "../middlewares/verifyUserId.middleware";
@@ -29,7 +29,8 @@ userRouter.delete(
 userRouter.patch(
   "/:id",
   validateHeaderToken,
-  verifyAccountOwner,
   verifyUserId,
+  verifyAccountOwner,
+  validateRequestBody(UpdateUserSchema),
   userController.update
 );

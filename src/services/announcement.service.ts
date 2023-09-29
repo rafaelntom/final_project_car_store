@@ -35,7 +35,6 @@ const createAnnouncement = async (payload: TAnnouncement, userId: number) => {
 
   if (images) {
     images.map(async (image) => {
-      console.log(image);
       let newImage = new Image();
       newImage.img_url = image.img_url;
       newImage.announcement = newAnnouncement;
@@ -50,6 +49,7 @@ const retrieveAllAnnouncements = async () => {
   const allAnnouncements = await announcementRepository.find({
     relations: {
       images: true,
+      comments: true,
     },
     order: {
       id: "ASC",
@@ -80,7 +80,7 @@ const retrieveAnnouncementByUserId = async (userId: number) => {
     where: {
       user: { id: userId },
     },
-    relations: ["images", "comment"],
+    relations: ["images", "comments"],
   });
 
   return foundAnnouncements;

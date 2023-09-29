@@ -10,12 +10,12 @@ const create = async (req: Request, res: Response) => {
 const remove = async (req: Request, res: Response) => {
   const userId = Number(req.params.id);
   await deleteUser(userId);
-  return res.status(204).json(userId);
+  return res.status(204).json();
 };
 
 const update = async (req: Request, res: Response) => {
-  const user = res.locals.foundUser;
-  const updatedUserInfo = await updateUser(req.body, user);
+  const userId = Number(req.params.id);
+  const updatedUserInfo = await updateUser(req.body, userId);
   return res.status(200).json(updatedUserInfo);
 };
 

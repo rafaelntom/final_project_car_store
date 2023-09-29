@@ -47,6 +47,8 @@ export class Announcement {
   @OneToMany(() => Image, (i) => i.announcement, { cascade: true })
   images: Image[];
 
-  @OneToMany(() => Comment, (comment) => comment.user, { cascade: true })
-  comment: Comment;
+  @OneToMany(() => Comment, (comment) => comment.announcement, {
+    cascade: true,
+  })
+  comments: Comment;
 }

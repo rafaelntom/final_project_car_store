@@ -8,7 +8,6 @@ import {
 import validateHeaderToken from "../middlewares/validateToken.middleware";
 import verifyAccountType from "../middlewares/verifyAccountType.middleware";
 import verifyUserId from "../middlewares/verifyUserId.middleware";
-import { updateAnnouncement } from "../services/announcement.service";
 import verifyAccountOwner from "../middlewares/verifyAccountOwner.middleware";
 import verifyAnnouncementOwner from "../middlewares/verifyAnnouncementOwner.middleware";
 
@@ -32,7 +31,6 @@ announcementRouter.get(
 announcementRouter.patch(
   "/:id",
   validateHeaderToken,
-  verifyAccountType,
   validateRequestBody(UpdateAnnouncementSchema),
   verifyAccountOwner,
   announcementController.update
