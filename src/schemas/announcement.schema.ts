@@ -68,10 +68,6 @@ const UpdateAnnouncementSchema = AnnouncementSchema.partial().omit({
   user: true,
 });
 
-// .refine((images) => images.length > 0, {
-//   message: "Images array must not be empty.",
-// })
-
 export {
   AnnouncementSchema,
   CreateAnnouncementSchema,

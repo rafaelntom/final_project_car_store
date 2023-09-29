@@ -4,6 +4,10 @@ import { AppError } from "../errors/errors";
 import announcementRepository from "../repositories/announcement.repository";
 import commentRepository from "../repositories/comment.repository";
 import userRepository from "../repositories/user.repository";
+import {
+  CommentAnnouncementReturnSchema,
+  CommentSchema,
+} from "../schemas/comment.schema";
 
 export const createComment = async (
   userId: number,
@@ -12,7 +16,7 @@ export const createComment = async (
 ) => {
   const foundUser = await userRepository.findOne({
     where: {
-      id: 1,
+      id: userId,
     },
   });
 
@@ -22,7 +26,7 @@ export const createComment = async (
 
   const foundAnnouncement = await announcementRepository.findOne({
     where: {
-      id: 3,
+      id: announcementId,
     },
   });
 
@@ -37,5 +41,20 @@ export const createComment = async (
 
   await commentRepository.save(newComment);
 
-  return newComment;
+  return CommentSchema.parse(newComment);
+};
+
+export const listAnnouncementComments = async (announcementId: number) => {
+  const foundAnnouncement = await announcementRepository
+    .createQueryBuilder("announcement")
+    .leftJoinAndSelect("announcement.comments", "comment")
+    .leftJoinAndSelect("comment.user", "user")
+    .where("announcement.id = :id", { id: announcementId })
+    .getOne();
+
+  if (!foundAnnouncement) {
+    throw new AppError("Announcement not found, please check the id!", 409);
+  }
+
+  return CommentAnnouncementReturnSchema.parse(foundAnnouncement);
 };

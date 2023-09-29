@@ -1,12 +1,17 @@
 import { Router } from "express";
 import validateRequestBody from "../middlewares/validadeRequestBody.middleware";
-import { createCommentSchema } from "../schemas/comment.schema";
+import { CreateCommentSchema } from "../schemas/comment.schema";
 import { commentController } from "../controllers";
+import validateHeaderToken from "../middlewares/validateToken.middleware";
 
 export const commentRouter: Router = Router();
 
+commentRouter.use(validateHeaderToken);
+
 commentRouter.post(
-  "",
-  validateRequestBody(createCommentSchema),
+  "/announcement/:id",
+  validateRequestBody(CreateCommentSchema),
   commentController.create
 );
+
+commentRouter.get("/announcement/:id", commentController.read);

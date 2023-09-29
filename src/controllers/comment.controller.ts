@@ -1,10 +1,27 @@
 import { Request, Response } from "express";
-import { createComment } from "../services/comment.service";
+import {
+  createComment,
+  listAnnouncementComments,
+} from "../services/comment.service";
 
 const create = async (req: Request, res: Response) => {
-  const comment = await createComment(1, 2, req.body.description);
+  const userId = res.locals.decoded.sub;
+  const announcementId = Number(req.params.id);
+  const comment = await createComment(
+    userId,
+    announcementId,
+    req.body.description
+  );
 
   return res.status(200).json(comment);
 };
 
-export default { create };
+const read = async (req: Request, res: Response) => {
+  const foundAnnouncementComments = await listAnnouncementComments(
+    Number(req.params.id)
+  );
+
+  return res.status(200).json(foundAnnouncementComments);
+};
+
+export default { create, read };
