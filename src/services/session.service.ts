@@ -31,6 +31,7 @@ export const userLogin = async (payload: TUserLogin): Promise<string> => {
   const token = sign(
     {
       email: user.email,
+      is_seller: user.is_seller,
     },
     String(process.env.SECRET_KEY),
     {

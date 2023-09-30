@@ -58,3 +58,17 @@ export const listAnnouncementComments = async (announcementId: number) => {
 
   return CommentAnnouncementReturnSchema.parse(foundAnnouncement);
 };
+
+export const deleteComment = async (commentId: number) => {
+  const foundComment = await commentRepository.findOne({
+    where: {
+      id: commentId,
+    },
+  });
+
+  if (!foundComment) {
+    throw new AppError("Comment not found, please check the id provided!", 409);
+  }
+
+  await commentRepository.remove(foundComment);
+};

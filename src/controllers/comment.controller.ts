@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   createComment,
+  deleteComment,
   listAnnouncementComments,
 } from "../services/comment.service";
 
@@ -24,4 +25,11 @@ const read = async (req: Request, res: Response) => {
   return res.status(200).json(foundAnnouncementComments);
 };
 
-export default { create, read };
+const removeComment = async (req: Request, res: Response) => {
+  const commentId = Number(req.params.id);
+  await deleteComment(commentId);
+
+  return res.status(204).json();
+};
+
+export default { create, read, removeComment };
