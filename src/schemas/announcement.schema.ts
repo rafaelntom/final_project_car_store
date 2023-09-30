@@ -62,6 +62,12 @@ const RetrieveSingleAnnouncement = z.object({
       img_url: z.string().url(),
     })
   ),
+  comments: z.array(
+    z.object({
+      id: z.number(),
+      description: z.string(),
+    })
+  ),
 });
 
 const UpdateAnnouncementSchema = AnnouncementSchema.partial().omit({

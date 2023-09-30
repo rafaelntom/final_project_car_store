@@ -65,6 +65,7 @@ const retrieveAnnouncementById = async (announcementId: number) => {
     relations: {
       user: true,
       images: true,
+      comments: true,
     },
   });
 
