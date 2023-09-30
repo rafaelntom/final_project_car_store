@@ -3,6 +3,7 @@ import {
   createComment,
   deleteComment,
   listAnnouncementComments,
+  updateComment,
 } from "../services/comment.service";
 
 const create = async (req: Request, res: Response) => {
@@ -32,4 +33,12 @@ const removeComment = async (req: Request, res: Response) => {
   return res.status(204).json();
 };
 
-export default { create, read, removeComment };
+const update = async (req: Request, res: Response) => {
+  const commentId = Number(req.params.id);
+  const commentData = req.body;
+  const updatedComment = await updateComment(commentId, commentData);
+
+  return res.status(200).json(updatedComment);
+};
+
+export default { create, read, removeComment, update };

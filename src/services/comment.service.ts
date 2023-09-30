@@ -9,7 +9,7 @@ import {
   CommentSchema,
 } from "../schemas/comment.schema";
 
-export const createComment = async (
+const createComment = async (
   userId: number,
   announcementId: number,
   descriptionData: string
@@ -44,7 +44,7 @@ export const createComment = async (
   return CommentSchema.parse(newComment);
 };
 
-export const listAnnouncementComments = async (announcementId: number) => {
+const listAnnouncementComments = async (announcementId: number) => {
   const foundAnnouncement = await announcementRepository
     .createQueryBuilder("announcement")
     .leftJoinAndSelect("announcement.comments", "comment")
@@ -59,7 +59,7 @@ export const listAnnouncementComments = async (announcementId: number) => {
   return CommentAnnouncementReturnSchema.parse(foundAnnouncement);
 };
 
-export const deleteComment = async (commentId: number) => {
+const deleteComment = async (commentId: number) => {
   const foundComment = await commentRepository.findOne({
     where: {
       id: commentId,
@@ -71,4 +71,26 @@ export const deleteComment = async (commentId: number) => {
   }
 
   await commentRepository.remove(foundComment);
+};
+
+const updateComment = async (commentId: number, payload: any) => {
+  const foundComment = await commentRepository.findOne({
+    where: {
+      id: commentId,
+    },
+  });
+
+  const updatedComment = await commentRepository.save({
+    ...foundComment,
+    ...payload,
+  });
+
+  return updatedComment;
+};
+
+export {
+  createComment,
+  listAnnouncementComments,
+  deleteComment,
+  updateComment,
 };
