@@ -45,17 +45,32 @@ Zod é uma biblioteca de validação de dados altamente eficiente e fácil de us
     PostgreSQL, Dotenv e Zod. Após a conclusão da instalação, o serviço
     estará pronto para ser executado.
     <br>
+    <br>
 
-2.  Antes de inicializar o servidor, acesse o arquivo .env.example
+2.  Feito isso, rode as migrações para que as tabelas sejam geradas dentro do seu banco de dados
+
+    ```
+    npm run migration:run
+    ```
+
+    <br>
+    <br>
+
+3.  Antes de inicializar o servidor, acesse o arquivo .env.example
     dentro do projeto e preencha com as devidas configurações para
     conectar com o seu banco de dados PostgreSQL
 
-> env.example
-
+    ```
     DATABASE_URL=postgres://<user_name>:<user_password>@localhost:<port>/<database_name>
     SECRET_KEY=<your_secret_key>
     EXPIRES_IN=3h
     PORT=3000
+    ```
 
-3. Feito tudo isso, podemos iniciar a aplicação:
-   `npm run dev`
+    <br>
+    <br>
+
+4.  Feito tudo isso, podemos iniciar a aplicação:
+    ```
+    npm run dev
+    ```
