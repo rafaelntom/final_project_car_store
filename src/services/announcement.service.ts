@@ -70,7 +70,7 @@ const retrieveAnnouncementById = async (announcementId: number) => {
   });
 
   if (!foundAnnouncement) {
-    throw new AppError("Announcement not found, please check the id!", 409);
+    throw new AppError("Announcement not found, please check the id!", 404);
   }
 
   return RetrieveSingleAnnouncement.parse(foundAnnouncement);
@@ -99,7 +99,7 @@ const updateAnnouncement = async (
   });
 
   if (!foundAnnouncement) {
-    throw new AppError("Announcement not found, please check the id!", 409);
+    throw new AppError("Announcement not found, please check the id!", 404);
   }
 
   if (payload.images) {
@@ -111,9 +111,14 @@ const updateAnnouncement = async (
       newImage.announcement = foundAnnouncement;
       await imagesRepository.save(newImage);
     });
+
+    if (payload.images.length === 0) {
+      const existingImages = foundAnnouncement.images;
+      payload.images = existingImages;
+    }
   }
 
-  if (payload.images.length === 0) {
+  if (!payload.images) {
     const existingImages = foundAnnouncement.images;
     payload.images = existingImages;
   }

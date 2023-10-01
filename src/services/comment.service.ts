@@ -21,7 +21,7 @@ const createComment = async (
   });
 
   if (!foundUser) {
-    throw new AppError("User not found!", 409);
+    throw new AppError("User not found!", 404);
   }
 
   const foundAnnouncement = await announcementRepository.findOne({
@@ -31,7 +31,7 @@ const createComment = async (
   });
 
   if (!foundAnnouncement) {
-    throw new AppError("Announcement not found, please check the id!", 409);
+    throw new AppError("Announcement not found, please check the id!", 404);
   }
 
   const newComment = new Comment();
@@ -53,7 +53,7 @@ const listAnnouncementComments = async (announcementId: number) => {
     .getOne();
 
   if (!foundAnnouncement) {
-    throw new AppError("Announcement not found, please check the id!", 409);
+    throw new AppError("Announcement not found, please check the id!", 404);
   }
 
   return CommentAnnouncementReturnSchema.parse(foundAnnouncement);
@@ -67,7 +67,7 @@ const deleteComment = async (commentId: number) => {
   });
 
   if (!foundComment) {
-    throw new AppError("Comment not found, please check the id provided!", 409);
+    throw new AppError("Comment not found, please check the id provided!", 404);
   }
 
   await commentRepository.remove(foundComment);

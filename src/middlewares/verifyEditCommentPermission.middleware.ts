@@ -21,7 +21,7 @@ const verifyEditCommentPermission = async (
   });
 
   if (!foundComment)
-    throw new AppError("Comment not found, please check the id!", 409);
+    throw new AppError("Comment not found, please check the id!", 404);
 
   let parsedComment = CommentSchema.parse(foundComment);
   const foundCommentUserId = parsedComment.user.id;

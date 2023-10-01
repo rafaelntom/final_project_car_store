@@ -30,7 +30,14 @@ commentRouter.delete(
 
 //TODO Deletar rota ↓ - Apenas utilizada para verificar todos os comentarios
 commentRouter.get("", async (req, res) => {
-  const allComments = await commentRepository.find();
+  const allComments = await commentRepository.find({
+    relations: {
+      user: true,
+    },
+    order: {
+      id: "ASC",
+    },
+  });
 
   return res.status(200).json(allComments);
 });
