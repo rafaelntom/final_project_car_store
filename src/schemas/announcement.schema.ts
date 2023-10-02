@@ -65,6 +65,7 @@ const RetrieveSingleAnnouncement = z.object({
   comments: z.array(
     z.object({
       id: z.number(),
+      created_at: z.string(),
       description: z.string(),
     })
   ),
