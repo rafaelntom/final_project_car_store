@@ -11,12 +11,14 @@ const CommentUserSchema = z.object({
 const CommentSchema = z.object({
   id: z.number().positive(),
   description: z.string(),
+  created_at: z.string(),
   user: CommentUserSchema,
 });
 
 const CreateCommentSchema = CommentSchema.omit({
   id: true,
   user: true,
+  created_at: true,
 });
 
 const CommentAnnouncementReturnSchema = z.object({
@@ -38,6 +40,7 @@ const CommentAnnouncementReturnSchema = z.object({
     z.object({
       id: z.number().positive(),
       description: z.string(),
+      created_at: z.string(),
       user: z.object({
         id: z.number(),
         is_seller: z.boolean(),
