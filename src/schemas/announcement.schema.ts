@@ -68,6 +68,9 @@ const RetrieveSingleAnnouncement = z.object({
       id: z.number(),
       created_at: z.string(),
       description: z.string(),
+      user: z.object({
+        name: z.string(),
+      }),
     })
   ),
 });

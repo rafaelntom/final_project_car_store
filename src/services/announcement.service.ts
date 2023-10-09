@@ -66,7 +66,9 @@ const retrieveAnnouncementById = async (announcementId: number) => {
     relations: {
       user: true,
       images: true,
-      comments: true,
+      comments: {
+        user: true,
+      },
     },
     order: {
       id: "ASC",
