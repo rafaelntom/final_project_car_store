@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { createUser, deleteUser, updateUser } from "../services/user.service";
+import {
+  createUser,
+  deleteUser,
+  getUserById,
+  updateUser,
+} from "../services/user.service";
 
 const create = async (req: Request, res: Response) => {
   const userData = req.body;
@@ -19,4 +24,10 @@ const update = async (req: Request, res: Response) => {
   return res.status(200).json(updatedUserInfo);
 };
 
-export default { create, remove, update };
+const readById = async (req: Request, res: Response) => {
+  const userId = Number(req.params.id);
+  const foundUser = await getUserById(userId);
+  return res.status(200).json(foundUser);
+};
+
+export default { create, remove, update, readById };

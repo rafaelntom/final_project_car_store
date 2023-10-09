@@ -26,6 +26,8 @@ userRouter.delete(
   userController.remove
 );
 
+userRouter.get("/:id", verifyUserId, userController.readById);
+
 userRouter.patch(
   "/:id",
   validateHeaderToken,

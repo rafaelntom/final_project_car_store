@@ -4,15 +4,11 @@ const AnnouncementUserSchema = z.object({
   id: z.number(),
   name: z.string(),
   email: z.string().email(),
+  description: z.string().nullable(),
 });
 
 const AnnouncementSchema = z.object({
   id: z.number().positive(),
-  images: z.array(
-    z.object({
-      img_url: z.string().url(),
-    })
-  ),
   brand: z.string().min(1).max(40).nonempty(),
   model: z.string().min(1).max(50).nonempty(),
   year: z
@@ -27,6 +23,11 @@ const AnnouncementSchema = z.object({
   price: z.string().nonempty().or(z.number().nonnegative()),
   description: z.string(),
   user: AnnouncementUserSchema,
+  images: z.array(
+    z.object({
+      img_url: z.string().url(),
+    })
+  ),
 });
 
 const CreateAnnouncementSchema = AnnouncementSchema.omit({

@@ -1,7 +1,11 @@
 import { hashSync } from "bcryptjs";
 import { TCreateUser, TUserReturn } from "../interfaces/user.interface";
 import userRepository from "../repositories/user.repository";
-import { UpdateUserSchema, UserReturnSchema } from "../schemas/user.schema";
+import {
+  GetOneUserSchema,
+  UpdateUserSchema,
+  UserReturnSchema,
+} from "../schemas/user.schema";
 import addressRepository from "../repositories/address.repository";
 
 const createUser = async (payload: TCreateUser): Promise<TUserReturn> => {
@@ -61,4 +65,14 @@ const updateUser = async (payload: any, userId: number) => {
   return UpdateUserSchema.parse(updatedUser);
 };
 
-export { createUser, deleteUser, updateUser };
+const getUserById = async (userId: number) => {
+  const foundUser = await userRepository.findOne({
+    where: {
+      id: userId,
+    },
+  });
+
+  return GetOneUserSchema.parse(foundUser);
+};
+
+export { createUser, deleteUser, updateUser, getUserById };

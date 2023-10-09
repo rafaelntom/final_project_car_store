@@ -11,10 +11,7 @@ const verifyCPF = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     if (userCPFAlreadyExists) {
-      throw new AppError(
-        "Sorry, this CPF is already associated with an existing account",
-        409
-      );
+      throw new AppError("CPF associado a uma conta já existente!", 409);
     }
   }
 

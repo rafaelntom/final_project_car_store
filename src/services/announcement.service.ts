@@ -50,13 +50,14 @@ const retrieveAllAnnouncements = async () => {
     relations: {
       images: true,
       comments: true,
+      user: true,
     },
     order: {
       id: "ASC",
     },
   });
 
-  return allAnnouncements;
+  return RetrieveAnnouncementsSchema.parse(allAnnouncements);
 };
 
 const retrieveAnnouncementById = async (announcementId: number) => {
@@ -66,6 +67,9 @@ const retrieveAnnouncementById = async (announcementId: number) => {
       user: true,
       images: true,
       comments: true,
+    },
+    order: {
+      id: "ASC",
     },
   });
 
@@ -81,10 +85,13 @@ const retrieveAnnouncementByUserId = async (userId: number) => {
     where: {
       user: { id: userId },
     },
-    relations: ["images", "comments"],
+    relations: ["images", "comments", "user"],
+    order: {
+      id: "ASC",
+    },
   });
 
-  return foundAnnouncements;
+  return RetrieveAnnouncementsSchema.parse(foundAnnouncements);
 };
 
 const updateAnnouncement = async (

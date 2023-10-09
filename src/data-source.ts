@@ -12,7 +12,7 @@ const settings = (): DataSourceOptions => {
   return {
     type: "postgres",
     url: dbUrl,
-    logging: true,
+    logging: true ,
     entities: [entitiesPath],
     migrations: [migrationPath],
   };

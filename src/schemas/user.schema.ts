@@ -14,6 +14,12 @@ const UserSchema = z.object({
   address: AddressSchema,
 });
 
+const GetOneUserSchema = UserSchema.pick({
+  id: true,
+  is_seller: true,
+  name: true,
+  description: true,
+});
 const UserReturnSchema = UserSchema.omit({ password: true });
 const UserOnlySchema = UserSchema.omit({ address: true });
 const UserLoginSchema = UserSchema.pick({ email: true, password: true });
@@ -43,4 +49,5 @@ export {
   UpdateUserSchema,
   UserLoginSchema,
   UserOnlySchema,
+  GetOneUserSchema,
 };

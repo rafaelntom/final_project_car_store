@@ -6,8 +6,10 @@ import { userRouter } from "./routers/user.router";
 import { sessionRouter } from "./routers/session.router";
 import { announcementRouter } from "./routers/announcement.router";
 import { commentRouter } from "./routers/comment.router";
+let cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/login", sessionRouter);

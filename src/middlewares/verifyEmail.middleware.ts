@@ -11,10 +11,7 @@ const verifyEmail = async (req: Request, res: Response, next: NextFunction) => {
     });
 
     if (userEmailAlreadyExists) {
-      throw new AppError(
-        "Sorry, this email address is already associated with an existing account. Please use a different email address",
-        409
-      );
+      throw new AppError("E-mail informado já está sendo usado!", 409);
     }
   }
 

@@ -32,6 +32,7 @@ export const userLogin = async (payload: TUserLogin): Promise<string> => {
     {
       email: user.email,
       is_seller: user.is_seller,
+      name: user.name,
     },
     String(process.env.SECRET_KEY),
     {
