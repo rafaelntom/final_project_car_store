@@ -44,13 +44,13 @@ export class User {
   @Column({ type: "varchar", length: 150, nullable: true })
   description: string | null;
 
-  @OneToOne(() => Address, (address) => address.user)
+  @OneToOne(() => Address, (address) => address.user, { cascade: true })
   @JoinColumn()
   address: Address;
 
-  @OneToMany(() => Announcement, (a) => a.user)
+  @OneToMany(() => Announcement, (a) => a.user, { cascade: true })
   announcement: Announcement[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user, { cascade: true })
   comment: Comment[];
 }

@@ -1,6 +1,10 @@
 import { Router } from "express";
 import validateRequestBody from "../middlewares/validadeRequestBody.middleware";
-import { CommentSchema, CreateCommentSchema } from "../schemas/comment.schema";
+import {
+  CommentArraySchema,
+  CommentSchema,
+  CreateCommentSchema,
+} from "../schemas/comment.schema";
 import { commentController } from "../controllers";
 import validateHeaderToken from "../middlewares/validateToken.middleware";
 import verifyCommentPermission from "../middlewares/verifyCommentPermission.middleware";
@@ -38,6 +42,6 @@ commentRouter.get("", async (req, res) => {
       id: "ASC",
     },
   });
-
-  return res.status(200).json(allComments);
+  const parsedComment = CommentArraySchema.parse(allComments);
+  return res.status(200).json(parsedComment);
 });

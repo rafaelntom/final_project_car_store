@@ -15,6 +15,8 @@ const CommentSchema = z.object({
   user: CommentUserSchema,
 });
 
+const CommentArraySchema = z.array(CommentSchema);
+
 const CreateCommentSchema = CommentSchema.omit({
   id: true,
   user: true,
@@ -51,4 +53,9 @@ const CommentAnnouncementReturnSchema = z.object({
   ),
 });
 
-export { CommentSchema, CreateCommentSchema, CommentAnnouncementReturnSchema };
+export {
+  CommentSchema,
+  CreateCommentSchema,
+  CommentAnnouncementReturnSchema,
+  CommentArraySchema,
+};

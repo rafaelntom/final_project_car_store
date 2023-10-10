@@ -24,6 +24,6 @@ export class Comment {
   })
   announcement: Announcement;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { onDelete: "CASCADE" })
   user: User;
 }
