@@ -32,7 +32,7 @@ announcementRouter.patch(
   "/:id",
   validateHeaderToken,
   validateRequestBody(UpdateAnnouncementSchema),
-  verifyAccountOwner,
+  verifyAnnouncementOwner,
   announcementController.update
 );
 
